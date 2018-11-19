@@ -3,28 +3,33 @@
   group:
     name: conjur
     state: present
+  become: true
 
 - block:
   - name: Install "ca-certificates"
     apt:
       name: ca-certificates
+    become: true
 
   - name: Place Conjur public SSL certificate
     copy:
       dest: "{{conjur_ssl_certificate_path}}"
       content: "{{conjur_ssl_certificate}}"
       mode: 0644
+    become: true
 
   - name: Symlink Conjur public SSL certificate into /etc/ssl/certs
     file:
       src: "{{conjur_ssl_certificate_path}}"
       dest: /etc/ssl/certs/conjur.crt
       state: link
+    become: true
     register: cert_symlink
 
   - name: Rehash certs
     command: 'c_rehash'
     when: cert_symlink.changed
+    become: true
   when: ssl_configuration
 
 - name: Render /etc/conjur.conf
@@ -32,6 +37,7 @@
     src: templates/conjur.conf.j2
     dest: /etc/conjur.conf
     mode: 0644
+  become: true
 
 - block:
   - name: Request identity from Conjur
@@ -52,4 +58,5 @@
       dest: /etc/conjur.identity
       mode: 0640
       group: conjur
+    become: true
   when: not conjurized

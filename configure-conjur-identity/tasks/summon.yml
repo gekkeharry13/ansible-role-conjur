@@ -5,3 +5,4 @@
     dest: /usr/local/bin
     remote_src: yes
     creates: /usr/local/bin/summon
+  become: true

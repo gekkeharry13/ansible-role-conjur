@@ -4,6 +4,7 @@
     path: /usr/local/lib/summon
     state: directory
     recurse: yes
+  become: true
 
 - name: Download and unpack Summon-Conjur
   unarchive:
@@ -11,3 +12,4 @@
     dest: /usr/local/lib/summon
     remote_src: yes
     creates: /usr/local/lib/summon/summon-conjur
+  become: true
