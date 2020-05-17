@@ -10,6 +10,9 @@
     - name: Install "ca-certificates"
       apt:
         name: ca-certificates
+      tags: 
+        - no_apt
+        - always
 
     - name: Place Conjur public SSL certificate
       copy:

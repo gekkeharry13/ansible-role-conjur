@@ -10,6 +10,9 @@
     apt:
       name: ca-certificates
     become: true
+    tags: 
+      - no_apt
+      - always
 
   - name: Place Conjur public SSL certificate
     copy:
